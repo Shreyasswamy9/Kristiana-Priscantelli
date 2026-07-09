@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: 'Work',    href: '#work' },
   { label: 'Reel',    href: '#reel' },
   { label: 'Gallery', href: '#gallery' },
+  { label: 'Resume',  href: '#resume' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -34,16 +35,17 @@ export default function Header() {
         transition={{ duration: 0.9, ease: 'easeOut', delay: 1.2 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? 'py-4 bg-ink/92 backdrop-blur-md border-b border-white/[0.05]'
+            ? 'py-4 bg-chalk/95 backdrop-blur-md border-b border-ink/[0.06]'
             : 'py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
 
-          {/* Wordmark — Cormorant italic, elegant contrast against grotesque nav */}
           <a
             href="#hero"
-            className="font-serif italic text-[1.1rem] tracking-wide text-chalk hover:text-rouge transition-colors duration-300"
+            className={`font-serif italic text-[1.1rem] tracking-wide transition-colors duration-300 ${
+              scrolled ? 'text-ink hover:text-cobalt' : 'text-chalk hover:text-cobalt'
+            }`}
           >
             Kristiana Priscantelli
           </a>
@@ -54,10 +56,12 @@ export default function Header() {
               <a
                 key={label}
                 href={href}
-                className="font-body text-[0.6rem] tracking-[0.28em] uppercase text-ash hover:text-chalk transition-colors duration-300 group relative"
+                className={`font-body text-[0.6rem] tracking-[0.28em] uppercase transition-colors duration-300 group relative ${
+                  scrolled ? 'text-ash hover:text-ink' : 'text-chalk/65 hover:text-chalk'
+                }`}
               >
                 {label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-rouge group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-cobalt group-hover:w-full transition-all duration-300" />
               </a>
             ))}
           </nav>
@@ -68,14 +72,14 @@ export default function Header() {
             aria-label="Toggle menu"
             className="md:hidden flex flex-col gap-[5px]"
           >
-            <span className={`block w-5 h-px bg-veil transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6px]' : ''}`} />
-            <span className={`block w-5 h-px bg-veil transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-px bg-veil transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6px]' : ''}`} />
+            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6px]' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
+            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? 'opacity-0' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
+            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6px]' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
           </button>
         </div>
       </motion.header>
 
-      {/* Mobile fullscreen menu */}
+      {/* Mobile fullscreen menu — cobalt colorblock */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -84,10 +88,9 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-ink flex flex-col items-start justify-center gap-8 px-10"
+            className="fixed inset-0 z-40 bg-cobalt flex flex-col items-start justify-center gap-8 px-10"
           >
-            {/* Rouge accent line */}
-            <div className="w-10 h-px bg-rouge mb-2" />
+            <div className="w-10 h-px bg-chalk/40 mb-2" />
             {NAV_LINKS.map(({ label, href }, i) => (
               <motion.a
                 key={label}
@@ -96,7 +99,7 @@ export default function Header() {
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.07 }}
-                className="font-display uppercase text-[3.5rem] text-chalk hover:text-rouge transition-colors duration-200"
+                className="font-display uppercase text-[3.5rem] text-chalk hover:text-chalk/70 transition-colors duration-200"
               >
                 {label}
               </motion.a>

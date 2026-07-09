@@ -7,67 +7,61 @@
 export const FEATURED_PROJECTS = [
   {
     id: 1,
-    title: "The Longest Hour",
-    type: "Feature Film",
-    role: "Lead — Clara",
+    title: "Mishpucha",
+    type: "Film",
+    role: "Lead",
     year: "2024",
-    description: "A psychological drama exploring grief and isolation in contemporary New York.",
-    // imageSrc: "/images/projects/the-longest-hour.jpg",
-    imageSrc: null,
-    aspect: "landscape", // landscape | portrait | square
+    description: "A story of family, loyalty, and what we carry without choosing to.",
+    imageSrc: "/images/mishpucha.jpg",
+    aspect: "landscape",
   },
   {
     id: 2,
-    title: "Bitter Residue",
-    type: "Short Film",
-    role: "Supporting — Nadia",
+    title: "Being Here",
+    type: "Film",
+    role: "Lead",
     year: "2023",
-    description: "Official selection, Tribeca Film Festival 2023.",
-    // imageSrc: "/images/projects/bitter-residue.jpg",
-    imageSrc: null,
+    description: "An intimate portrait of presence and the cost of staying.",
+    imageSrc: "/images/being-here.jpg",
     aspect: "portrait",
   },
   {
     id: 3,
-    title: "Everything Still",
-    type: "Theatre",
-    role: "Lead — Margot",
+    title: "Warm Canto",
+    type: "Film",
+    role: "Lead",
     year: "2023",
-    description: "Off-Broadway production at the Atlantic Theater Company.",
-    // imageSrc: "/images/projects/everything-still.jpg",
-    imageSrc: null,
+    description: "Sun-soaked and searching — a quiet summer film about connection.",
+    imageSrc: "/images/warmcanto.jpg",
     aspect: "landscape",
   },
   {
     id: 4,
-    title: "Undertow",
-    type: "TV — Pilot",
-    role: "Recurring — Detective Reeves",
-    year: "2022",
-    description: "Crime drama pilot optioned by HBO.",
-    // imageSrc: "/images/projects/undertow.jpg",
+    title: "The Longest Hour",
+    type: "Feature Film",
+    role: "Lead — Clara",
+    year: "2024–25",
+    description: "A psychological drama exploring grief and isolation. Currently in post-production.",
     imageSrc: null,
     aspect: "square",
   },
   {
     id: 5,
-    title: "A Quiet Violence",
-    type: "Short Film",
-    role: "Lead — Anna",
-    year: "2022",
-    description: "Winner, Best Actress — Brooklyn Horror Film Festival.",
-    // imageSrc: "/images/projects/a-quiet-violence.jpg",
+    title: "Everything Still",
+    type: "Theatre",
+    role: "Lead — Margot",
+    year: "2023",
+    description: "Off-Broadway at the Atlantic Theater Company.",
     imageSrc: null,
     aspect: "portrait",
   },
   {
     id: 6,
-    title: "Glass Animals",
-    type: "Web Series",
-    role: "Lead — Elise",
-    year: "2021",
-    description: "4-episode psychological thriller series.",
-    // imageSrc: "/images/projects/glass-animals.jpg",
+    title: "A Quiet Violence",
+    type: "Short Film",
+    role: "Lead — Anna",
+    year: "2022",
+    description: "Winner, Best Actress — Brooklyn Horror Film Festival.",
     imageSrc: null,
     aspect: "landscape",
   },
@@ -75,22 +69,22 @@ export const FEATURED_PROJECTS = [
 
 export const GALLERY_ITEMS = [
   // Headshots
-  { id: 1,  category: "Headshots",   imageSrc: null, alt: "Headshot — Studio, 2024",    height: "tall" },
-  { id: 2,  category: "Headshots",   imageSrc: null, alt: "Headshot — Outdoor, 2024",   height: "medium" },
-  { id: 3,  category: "Headshots",   imageSrc: null, alt: "Headshot — Profile, 2023",   height: "tall" },
+  { id: 1,  category: "Headshots",   imageSrc: "/images/hero.jpg",       alt: "Portrait, 2024",             height: "tall" },
+  { id: 2,  category: "Headshots",   imageSrc: null,                     alt: "Headshot — Outdoor, 2024",   height: "medium" },
+  { id: 3,  category: "Headshots",   imageSrc: null,                     alt: "Headshot — Profile, 2023",   height: "tall" },
   // Film Stills
-  { id: 4,  category: "Film Stills", imageSrc: null, alt: "The Longest Hour, 2024",      height: "medium" },
-  { id: 5,  category: "Film Stills", imageSrc: null, alt: "A Quiet Violence, 2022",      height: "tall" },
-  { id: 6,  category: "Film Stills", imageSrc: null, alt: "Bitter Residue, 2023",        height: "medium" },
+  { id: 4,  category: "Film Stills", imageSrc: "/images/mishpucha.jpg",  alt: "Mishpucha, 2024",            height: "medium" },
+  { id: 5,  category: "Film Stills", imageSrc: "/images/being-here.jpg", alt: "Being Here, 2023",           height: "tall" },
+  { id: 6,  category: "Film Stills", imageSrc: null,                     alt: "A Quiet Violence, 2022",     height: "medium" },
   // Stage
-  { id: 7,  category: "Stage",       imageSrc: null, alt: "Everything Still, ATCo 2023", height: "tall" },
-  { id: 8,  category: "Stage",       imageSrc: null, alt: "Workshop Reading, 2022",      height: "medium" },
+  { id: 7,  category: "Stage",       imageSrc: null,                     alt: "Everything Still, ATCo 2023", height: "tall" },
+  { id: 8,  category: "Stage",       imageSrc: null,                     alt: "Workshop Reading, 2022",     height: "medium" },
   // BTS
-  { id: 9,  category: "BTS",         imageSrc: null, alt: "On set — The Longest Hour",   height: "medium" },
-  { id: 10, category: "BTS",         imageSrc: null, alt: "Rehearsal — Everything Still",height: "tall" },
+  { id: 9,  category: "BTS",         imageSrc: "/images/warmcanto.jpg",  alt: "On set — Warm Canto",        height: "medium" },
+  { id: 10, category: "BTS",         imageSrc: null,                     alt: "Rehearsal — Everything Still",height: "tall" },
   // Video
-  { id: 11, category: "Video",       imageSrc: null, alt: "Scene — Undertow Pilot",      height: "medium" },
-  { id: 12, category: "Video",       imageSrc: null, alt: "Scene — Glass Animals Ep. 2", height: "medium" },
+  { id: 11, category: "Video",       imageSrc: null,                     alt: "Scene — The Longest Hour",   height: "medium" },
+  { id: 12, category: "Video",       imageSrc: null,                     alt: "Scene — Being Here",         height: "medium" },
 ]
 
 export const GALLERY_CATEGORIES = ["All", "Headshots", "Film Stills", "Stage", "BTS", "Video"]
@@ -143,8 +137,8 @@ export const RECENT_ITEMS = [
 export const CONTACT_LINKS = [
   {
     label: "Email",
-    value: "representation@example.com",  // Replace with real email or agent contact
-    href: "mailto:representation@example.com",
+    value: "kristiana.priscantelli@gmail.com",
+    href: "mailto:kristiana.priscantelli@gmail.com",
     external: false,
   },
   {
@@ -178,6 +172,74 @@ export const CONTACT_LINKS = [
     external: true,
   },
 ]
+
+export const TICKER_CREDITS = [
+  "TRIBECA FILM FESTIVAL — 2025",
+  "ATLANTIC THEATER COMPANY",
+  "BROOKLYN HORROR FILM FESTIVAL — BEST ACTRESS NOM.",
+  "OFF-BROADWAY",
+  "STEPPENWOLF THEATRE — RESIDENCY",
+  "NEW YORK · FILM · TELEVISION · THEATRE",
+]
+
+export const PRESS_QUOTE = {
+  quote: "One to watch.",
+  source: "The Interval",
+  context: "Featured in emerging performers roundup, 2024",
+}
+
+export const RESUME_PDF_URL = "/Kristiana-Priscantelli-Resume.pdf"
+export const RESUME_STATUS = "SAG-Eligible"
+
+export const CREDITS = [
+  // Film
+  { category: "Film", title: "7734 Sunset Place",        tier: "Lead",       format: "Feature",                        director: "Travis Frick" },
+  { category: "Film", title: "A Basket of Apples",       tier: "Supporting", format: "Feature — NYU MFA Thesis",       director: "Yeung Tung" },
+  { category: "Film", title: "www.RachelOrmont.com",     tier: "Day Player", format: "Feature",                        director: "Peter Vack" },
+  { category: "Film", title: "Americatronic",            tier: "Day Player", format: "Feature",                        director: "Melanie de Souza" },
+  { category: "Film", title: "Dark World Children",      tier: "Supporting", format: "Short — NYU MFA Thesis",         director: "Reuben Hamlyn" },
+  { category: "Film", title: "Gestations",               tier: "Supporting", format: "Short — NYU MFA Thesis",         director: "Chris Del Rio" },
+  { category: "Film", title: "The Wrong Idea",           tier: "Supporting", format: "Short — NYU MFA Thesis",         director: "Sophia B. Holmes" },
+  { category: "Film", title: "Bag Lady",                 tier: "Lead",       format: "Short",                          director: "Caitie Karasik" },
+  { category: "Film", title: "Being Here",                tier: "Lead",       format: "Short",                          director: "Katie Colwell" },
+  { category: "Film", title: "Brace Yourself",           tier: "Lead",       format: "Short",                          director: "Archit Upadhyay" },
+  { category: "Film", title: "Fruitless in the Farmland", tier: "Lead",       format: "Short",                          director: "Lindsey Formes" },
+  { category: "Film", title: "Immeasurable Hyperdontia", tier: "Lead",       format: "Short",                          director: "Paul DeSilva" },
+  { category: "Film", title: "Warm Canto",                tier: "Lead",       format: "Short",                          director: "Leonardo Gastel" },
+  { category: "Film", title: "When the Night Falls",     tier: "Lead",       format: "Short",                          director: "Yue Ma" },
+  { category: "Film", title: "Blue Cardinals",           tier: "Supporting", format: "Short",                          director: "Bilal Hefner" },
+  { category: "Film", title: "Mishpucha",                 tier: "Supporting", format: "Short",                          director: "Andi Avery" },
+  // Theater
+  { category: "Theater", title: "Cimino's Defeat", role: "Cindy Lee / Penny", format: "Adult Film Theater Company" },
+  { category: "Theater", title: "Action",          role: "Lupe",              format: "Madame George Ensemble Works" },
+  { category: "Theater", title: "The Do-Gooders",  role: "Beth",              format: "Murmuration Thtr Co." },
+  { category: "Theater", title: "Hamlet",          role: "Ophelia",           format: "North Corner Thtr Co." },
+  // Voiceover
+  { category: "Voiceover", title: "Netflix Queue Social", role: "Narrator",     format: "Netflix" },
+  { category: "Voiceover", title: "Rimowa",               role: "Photo Agent", format: "Alto Visuals" },
+  // Commercial
+  { category: "Commercial", title: "Society 6", format: "Mellow Mako", note: "Conflicts available upon request" },
+  // Music Video
+  { category: "Music Video", title: "John Maus", format: "Gummy Films" },
+]
+
+export const CREDIT_CATEGORIES = ["All", "Film", "Theater", "Voiceover", "Commercial", "Music Video"]
+
+export const EDUCATION = "NYU Gallatin BA — Acting and the Creative Process"
+
+export const TRAINING = [
+  { discipline: "Conservatory", detail: "Terry Knickerbocker Conservatory — Terry Knickerbocker, Julia Crockett (movement)" },
+  { discipline: "Scene Study",  detail: "Pamela Scott, Peter Vack, Nathan Flower" },
+  { discipline: "On-Camera",    detail: "Eric Reis, Jon Shear, David Garelik (ongoing), Kathleen Baggott, John Wills Martin" },
+  { discipline: "Improv",       detail: "The PIT — Levels 1 & 2, with Patrick McCartney" },
+]
+
+export const SKILLS = [
+  "RYT Yoga Instructor", "Tennis", "Competitive Swimming", "Diving",
+  "Volleyball", "Biking", "US Passport", "Driver's License",
+]
+
+export const DIALECTS = ["Australian", "British", "French", "Irish", "Italian", "Russian", "Southern U.S."]
 
 // Main reel — replace src with real Vimeo/YouTube unlisted URL
 export const REEL = {

@@ -6,7 +6,7 @@ export default function ContactSection() {
   const { ref, inView } = useInView({ threshold: 0.15 })
 
   return (
-    <section id="contact" className="relative py-32 md:py-48 bg-carbon">
+    <section id="contact" className="relative py-32 md:py-48 bg-ink">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
         <div ref={ref} className="grid md:grid-cols-12 gap-12 md:gap-0">
@@ -17,7 +17,7 @@ export default function ContactSection() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7 }}
-              className="font-body text-[0.55rem] tracking-[0.35em] uppercase text-ash mb-4"
+              className="font-body text-[0.55rem] tracking-[0.35em] uppercase text-silver mb-4"
             >
               Connect
             </motion.p>
@@ -41,7 +41,7 @@ export default function ContactSection() {
 
           {/* Right — link list */}
           <div className="md:col-span-6 md:col-start-7 flex flex-col justify-center">
-            <ul className="divide-y divide-white/[0.05]">
+            <ul className="divide-y divide-white/[0.06]">
               {CONTACT_LINKS.map(({ label, value, href, external }, i) => (
                 <motion.li
                   key={label}
@@ -55,17 +55,17 @@ export default function ContactSection() {
                     rel={external ? 'noopener noreferrer' : undefined}
                     className="group flex items-center justify-between py-5 md:py-6 hover:pl-2 transition-all duration-300"
                   >
-                    <div className="flex items-center gap-6">
-                      <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-ash w-24 shrink-0 group-hover:text-rouge transition-colors duration-300">
+                    <div className="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-6">
+                      <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-silver md:w-24 md:shrink-0 group-hover:text-cobalt transition-colors duration-300">
                         {label}
                       </span>
-                      <span className="font-body text-[0.82rem] text-silver group-hover:text-chalk transition-colors duration-300">
+                      <span className="font-body text-[0.82rem] text-mist group-hover:text-chalk transition-colors duration-300">
                         {value}
                       </span>
                     </div>
                     {external && (
                       <svg
-                        className="w-3 h-3 text-smoke group-hover:text-rouge transition-colors duration-300"
+                        className="w-3 h-3 text-ash group-hover:text-cobalt transition-colors duration-300"
                         fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={1.5}
                       >
                         <path d="M1 11L11 1M11 1H4M11 1v7" strokeLinecap="round" strokeLinejoin="round" />

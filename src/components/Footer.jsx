@@ -6,14 +6,14 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer ref={ref} className="relative bg-ink py-10 md:py-14 border-t border-white/[0.05]">
+    <footer ref={ref} className="relative bg-ink py-10 md:py-14 border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.7 }}
-          className="font-serif italic text-[1rem] text-ash"
+          className="font-serif italic text-[1rem] text-silver"
         >
           Kristiana Priscantelli
         </motion.p>
@@ -22,7 +22,7 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="font-body text-[0.52rem] tracking-[0.25em] uppercase text-smoke text-center"
+          className="font-body text-[0.52rem] tracking-[0.25em] uppercase text-ash text-center"
         >
           &copy; {year} &nbsp;&middot;&nbsp; All rights reserved
         </motion.p>
@@ -37,7 +37,7 @@ export default function Footer() {
             href="https://www.instagram.com/kristianapriscantelli/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-ash hover:text-rouge transition-colors duration-300"
+            className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-silver hover:text-cobalt transition-colors duration-300"
           >
             Instagram
           </a>
@@ -46,7 +46,7 @@ export default function Footer() {
             href="https://www.imdb.com/name/nm0000000/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-ash hover:text-rouge transition-colors duration-300"
+            className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-silver hover:text-cobalt transition-colors duration-300"
           >
             IMDb
           </a>

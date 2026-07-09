@@ -1,11 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import CreditsTicker from './CreditsTicker'
 
-// ─── HERO IMAGE ────────────────────────────────────────────────────────────────
-// Replace the placeholder below with the real hero image:
-//   <img src="/images/hero.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
-// High-contrast editorial portrait works best — tight crop, strong light.
-// ──────────────────────────────────────────────────────────────────────────────
+// writing-mode: vertical-lr + text-orientation: mixed
+// Measured from screenshot: Permanent Marker advance ≈ 0.67em per char.
+// Targeting ~95vh so the text bleeds close to the edges (clips a touch at top/bottom).
+// Kristiana = 9 chars  → 95vh / (9  × 0.67) ≈ 15.7vh → use 16vh
+// Priscantelli = 12 chars → 95vh / (12 × 0.67) ≈ 11.8vh → use 12vh
+// min(vh, vw) caps the size on narrow/tall phone screens — vh alone ignores width
+// and blows the name up disproportionately on portrait mobile aspect ratios.
+const FONT_KRISTIANA    = 'clamp(3rem, min(16vh, 20vw), 20rem)'
+const FONT_PRISCANTELLI = 'clamp(2.4rem, min(12vh, 15vw), 15rem)'
 
 export default function Hero() {
   const bgRef = useRef(null)
@@ -14,7 +19,7 @@ export default function Hero() {
     let raf = null
     const update = () => {
       if (!bgRef.current) return
-      const offset = Math.min(100, window.scrollY * 0.1)
+      const offset = Math.min(80, window.scrollY * 0.08)
       bgRef.current.style.transform = `translateY(${offset}px)`
     }
     const handler = () => {
@@ -30,106 +35,115 @@ export default function Hero() {
   }, [])
 
   return (
-    <section
-      id="hero"
-      className="relative w-full h-screen min-h-[680px] overflow-hidden grain-overlay"
-    >
-      {/* Background image */}
+    <section id="hero" className="relative w-full h-screen min-h-[680px] overflow-hidden">
+
+      {/* Full-bleed photo */}
       <div ref={bgRef} className="absolute inset-0 will-change-transform" style={{ transform: 'translateY(0px)' }}>
         <img
           src="/images/hero.jpg"
           alt="Portrait of Kristiana Priscantelli"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          className="absolute inset-0 w-full h-full object-cover object-center"
           loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
-        {/* Gradient: lighter at top, heavier at bottom for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/20" />
+        {/* Slight side vignettes — keeps edge labels readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/25 via-transparent to-ink/25" />
       </div>
 
-      {/* Editorial index — top right, very small */}
+      {/* ── LEFT EDGE COLUMN ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.8 }}
-        className="absolute top-8 right-6 md:right-10 z-20 flex flex-col items-end gap-1"
+        transition={{ duration: 1, delay: 1.4 }}
+        className="hidden md:flex absolute left-5 md:left-7 top-0 bottom-0 z-20 pointer-events-none flex-col items-center justify-center gap-5"
       >
-        <span className="font-body text-[0.5rem] tracking-[0.3em] uppercase text-ash">New York</span>
-        <span className="font-body text-[0.5rem] tracking-[0.3em] uppercase text-ash">Film · Stage</span>
+        <span
+          className="font-body text-[0.4rem] uppercase tracking-[0.35em] text-cobalt/65"
+          style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', lineHeight: 1.4 }}
+        >
+          Actress · Film · Stage · New York
+        </span>
+        <span className="w-px h-6 bg-cobalt/30" />
+        <span
+          className="font-hand text-[0.6rem] text-cobalt/45"
+          style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', lineHeight: 1.4 }}
+        >
+          @kristianapriscantelli
+        </span>
       </motion.div>
 
-      {/* Main content — bottom-left, magazine cover anchored */}
-      <div className="absolute inset-x-0 bottom-0 px-6 md:px-10 pb-10 md:pb-14 z-10">
-
-        {/* Rouge accent line above tagline */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ originX: 0 }}
-          className="w-14 h-px bg-rouge mb-4"
-        />
-
-        {/* Tagline — Cormorant italic */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.55, ease: 'easeOut' }}
-          className="font-serif italic text-[0.95rem] md:text-[1.1rem] text-silver mb-3 tracking-wide"
+      {/* ── RIGHT EDGE COLUMN ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.4 }}
+        className="hidden md:flex absolute right-5 md:right-7 top-0 bottom-0 z-20 pointer-events-none flex-col items-center justify-center gap-5"
+      >
+        <span
+          className="font-body text-[0.4rem] uppercase tracking-[0.35em] text-cobalt/55"
+          style={{ writingMode: 'vertical-lr', lineHeight: 1.4 }}
         >
-          Actress · Performer · Storyteller
-        </motion.p>
+          Available · Film · Television · Theatre
+        </span>
+        <span className="w-px h-6 bg-cobalt/25" />
+        <span
+          className="font-body text-[0.4rem] uppercase tracking-[0.35em] text-cobalt/40"
+          style={{ writingMode: 'vertical-lr', lineHeight: 1.4 }}
+        >
+          New York · 2024
+        </span>
+      </motion.div>
 
-        {/* Name — Bebas Neue, full editorial impact */}
-        <div className="overflow-hidden">
-          <motion.h1
-            initial={{ y: '105%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.65 }}
-            className="font-display uppercase text-[clamp(4.5rem,16vw,14rem)] leading-none text-chalk tracking-wide"
+      {/* ── NAME — two brushstrokes, top-to-bottom, centered on face ── */}
+      {/* vertical-lr = left-to-right column order (Kristiana left, Priscantelli right) */}
+      {/* text-orientation: mixed = letters rotated 90°, reads like a book spine */}
+      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center"
+          style={{ gap: 'clamp(0.5rem, 1.5vw, 2.5rem)' }}
+        >
+          <span
+            className="font-hand text-cobalt"
+            style={{
+              writingMode: 'vertical-lr',
+              textOrientation: 'mixed',
+              fontSize: FONT_KRISTIANA,
+              letterSpacing: '0.06em',
+              lineHeight: 1,
+              display: 'block',
+            }}
           >
             Kristiana
-          </motion.h1>
-        </div>
-        <div className="overflow-hidden">
-          <motion.h1
-            initial={{ y: '105%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.78 }}
-            className="font-display uppercase text-[clamp(4.5rem,16vw,14rem)] leading-none text-chalk tracking-wide"
+          </span>
+          <span
+            className="font-hand text-cobalt"
+            style={{
+              writingMode: 'vertical-lr',
+              textOrientation: 'mixed',
+              fontSize: FONT_PRISCANTELLI,
+              letterSpacing: '0.06em',
+              lineHeight: 1,
+              display: 'block',
+            }}
           >
             Priscantelli
-          </motion.h1>
-        </div>
-
-        {/* Bottom row: now screening + scroll cue */}
-        <div className="mt-8 md:mt-10 flex items-end justify-between gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="border-l-2 border-rouge pl-4 max-w-[16rem]"
-          >
-            <p className="font-body text-[0.5rem] tracking-[0.3em] uppercase text-rouge mb-1">Now in post</p>
-            <p className="font-body text-[0.72rem] text-silver leading-relaxed">
-              The Longest Hour — feature film, currently in post-production
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.8 }}
-            className="flex flex-col items-center gap-2 shrink-0"
-          >
-            <motion.div
-              animate={{ y: [0, 7, 0] }}
-              transition={{ repeat: Infinity, duration: 2.6, ease: 'easeInOut' }}
-              className="w-px h-10 bg-gradient-to-b from-ash to-transparent"
-            />
-            <span className="font-body text-[0.48rem] tracking-[0.3em] uppercase text-ash">Scroll</span>
-          </motion.div>
-        </div>
+          </span>
+        </motion.div>
       </div>
+
+      {/* Rolling credits — anchored to the bottom of the hero so it reads on the first screen, no scroll needed */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.6 }}
+        className="absolute bottom-0 left-0 right-0 z-20"
+      >
+        <CreditsTicker />
+      </motion.div>
     </section>
   )
 }

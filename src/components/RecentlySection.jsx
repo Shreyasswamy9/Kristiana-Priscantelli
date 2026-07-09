@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion'
 import { RECENT_ITEMS } from '../data/placeholders'
 import { useInView } from '../hooks/useInView'
+import LaurelIcon from './LaurelIcon'
 
 const TYPE_COLOR = {
-  Festival:    'text-mist',
-  Performance: 'text-silver',
-  Film:        'text-silver',
-  Award:       'text-rouge',
-  Press:       'text-silver',
+  Festival:    'text-smoke',
+  Performance: 'text-ash',
+  Film:        'text-ash',
+  Award:       'text-gold',
+  Press:       'text-ash',
   Workshop:    'text-ash',
 }
 
@@ -29,18 +30,21 @@ function TimelineRow({ item, index }) {
 
       {/* Timeline line + dot */}
       <div className="relative flex flex-col items-center">
-        <div className="mt-1.5 w-1.5 h-1.5 bg-smoke group-hover:bg-rouge transition-colors duration-300" />
-        <div className="flex-1 w-px bg-gradient-to-b from-smoke to-transparent mt-1" />
+        <div className={`mt-1.5 w-1.5 h-1.5 transition-colors duration-300 ${
+          item.type === 'Award' ? 'bg-gold' : 'bg-veil group-hover:bg-cobalt'
+        }`} />
+        <div className="flex-1 w-px bg-gradient-to-b from-veil to-transparent mt-1" />
       </div>
 
       {/* Content */}
       <div className="pb-2">
         <div className="flex items-center gap-3 mb-1.5">
+          {item.type === 'Award' && <LaurelIcon className="w-4 h-4 text-gold shrink-0" />}
           <span className={`font-body text-[0.5rem] tracking-[0.25em] uppercase ${TYPE_COLOR[item.type] || 'text-ash'}`}>
             {item.type}
           </span>
         </div>
-        <h3 className="font-display uppercase text-[1.3rem] md:text-[1.5rem] text-chalk leading-none tracking-wide">
+        <h3 className="font-display uppercase text-[1.3rem] md:text-[1.5rem] text-ink leading-none tracking-wide">
           {item.title}
         </h3>
         <p className="font-body text-[0.72rem] text-ash mt-2 leading-relaxed">{item.detail}</p>
@@ -53,7 +57,7 @@ export default function RecentlySection() {
   const { ref, inView } = useInView({ threshold: 0.1 })
 
   return (
-    <section id="recently" className="relative py-24 md:py-36">
+    <section id="recently" className="relative py-24 md:py-36 bg-chalk">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
         <div ref={ref} className="mb-10 md:mb-14">
@@ -69,13 +73,13 @@ export default function RecentlySection() {
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display uppercase text-[clamp(3rem,7vw,6rem)] text-chalk leading-none"
+            className="font-display uppercase text-[clamp(3rem,7vw,6rem)] text-ink leading-none"
           >
             News &amp; Activity
           </motion.h2>
         </div>
 
-        <div className="divide-y divide-white/[0.05]">
+        <div className="divide-y divide-ink/[0.07]">
           {RECENT_ITEMS.map((item, i) => (
             <TimelineRow key={item.id} item={item} index={i} />
           ))}

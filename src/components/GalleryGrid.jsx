@@ -27,16 +27,19 @@ function GalleryItem({ item, index }) {
           alt={item.alt}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out grayscale-0 group-hover:grayscale group-hover:scale-[1.04]"
         />
       ) : (
         <div className="img-placeholder absolute inset-0" />
       )}
 
-      {/* Caption on hover */}
-      <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-ink/85 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <p className="font-body text-[0.5rem] tracking-[0.2em] text-rouge uppercase">{item.category}</p>
-        <p className="font-body text-[0.62rem] text-silver mt-0.5 leading-tight">{item.alt}</p>
+      {/* Duotone tint — matches the Work grid's hover language */}
+      <div className="absolute inset-0 bg-cobalt opacity-0 group-hover:opacity-50 mix-blend-color transition-opacity duration-500" />
+
+      {/* Caption — always visible on touch devices, hover-gated on desktop */}
+      <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-ink/85 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+        <p className="font-body text-[0.5rem] tracking-[0.2em] text-cobalt uppercase">{item.category}</p>
+        <p className="font-body text-[0.62rem] text-chalk/80 mt-0.5 leading-tight">{item.alt}</p>
       </div>
     </motion.div>
   )
@@ -51,7 +54,7 @@ export default function GalleryGrid() {
     : GALLERY_ITEMS.filter(item => item.category === active)
 
   return (
-    <section id="gallery" className="relative py-24 md:py-36">
+    <section id="gallery" className="relative py-24 md:py-36 bg-chalk">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
         {/* Header */}
@@ -68,7 +71,7 @@ export default function GalleryGrid() {
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display uppercase text-[clamp(3rem,7vw,6rem)] text-chalk leading-none"
+            className="font-display uppercase text-[clamp(3rem,7vw,6rem)] text-ink leading-none"
           >
             Gallery
           </motion.h2>
@@ -87,8 +90,8 @@ export default function GalleryGrid() {
               onClick={() => setActive(cat)}
               className={`font-body text-[0.55rem] tracking-[0.22em] uppercase px-4 py-2 border transition-all duration-200 ${
                 active === cat
-                  ? 'border-rouge text-rouge bg-rouge/[0.06]'
-                  : 'border-smoke text-ash hover:border-silver hover:text-silver'
+                  ? 'border-cobalt text-cobalt bg-cobalt/[0.06]'
+                  : 'border-veil text-ash hover:border-ash hover:text-smoke'
               }`}
             >
               {cat}
