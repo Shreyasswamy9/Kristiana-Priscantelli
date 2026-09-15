@@ -6,6 +6,14 @@ import ScrollArrow from './ScrollArrow'
 export default function ResumeSection() {
   const { ref, inView } = useInView({ threshold: 0.1 })
 
+  // Absolute URL required by Google's viewer (it fetches the PDF itself).
+  // Only resolves once deployed to a public domain — falls back gracefully
+  // to the view/download links below it if the embed can't load.
+  const resumeAbsoluteUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}${RESUME_PDF_URL}`
+    : RESUME_PDF_URL
+  const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(resumeAbsoluteUrl)}&embedded=true`
+
   return (
     <section id="resume" className="relative py-24 md:py-36 bg-paper">
       <div ref={ref} className="max-w-4xl mx-auto px-6 md:px-10">
@@ -69,34 +77,31 @@ export default function ResumeSection() {
           </object>
         </motion.div>
 
-        {/* Mobile fallback — no embed, direct view/download only */}
+        {/* Mobile — inline viewer via Google Docs (native <object>/<embed> PDF
+            rendering is unreliable across mobile browsers), so the resume stays
+            on-site instead of forcing a new-tab hop. Requires a public URL. */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.25 }}
-          className="md:hidden border border-ink/15 py-16 px-6 text-center"
+          className="md:hidden border border-ink/15 bg-white h-[70vh]"
         >
-          <p className="font-serif italic text-lg text-ink mb-6">
-            View the full resume as a PDF.
-          </p>
-          <div className="flex items-center justify-center gap-8">
-            <a
-              href={RESUME_PDF_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-type text-[0.62rem] tracking-[0.25em] uppercase text-ink hover:text-accent transition-colors duration-300"
-            >
-              View Resume
-            </a>
-            <a
-              href={RESUME_PDF_URL}
-              download
-              className="font-type text-[0.62rem] tracking-[0.25em] uppercase text-ink hover:text-accent transition-colors duration-300"
-            >
-              Download PDF
-            </a>
-          </div>
+          <iframe
+            src={googleViewerUrl}
+            title="Kristiana Priscantelli — Resume"
+            className="w-full h-full border-0"
+            loading="lazy"
+          />
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="md:hidden mt-4 text-center font-body text-[0.7rem] text-muted"
+        >
+          Not loading? Use View Resume or Download PDF above.
+        </motion.p>
       </div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-10 mt-20 md:mt-28 flex justify-center">

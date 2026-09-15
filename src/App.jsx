@@ -11,6 +11,7 @@ import TestimonialsSection from './components/TestimonialsSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import GrainOverlay from './components/GrainOverlay'
+import ContactFAB from './components/ContactFAB'
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
         <Footer />
       </div>
       <GrainOverlay />
+      <ContactFAB />
     </>
   )
 }

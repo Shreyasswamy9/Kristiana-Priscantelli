@@ -41,8 +41,10 @@ export default function ReelSection() {
               title="Kristiana Priscantelli — Reel"
               className="absolute inset-0 w-full h-full border-0"
               loading="lazy"
-              allow="autoplay; fullscreen; picture-in-picture"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
               allowFullScreen
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
             />
           )}
         </motion.div>

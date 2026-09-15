@@ -28,7 +28,7 @@ export const FEATURED_PROJECTS = [
     year: "2023",
     description: "An intimate portrait of presence and the cost of staying.",
     imageSrc: "/images/being-here.jpg",
-    aspect: "portrait",
+    aspect: "landscape",
   },
   {
     id: 3,
