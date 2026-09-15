@@ -1,108 +1,89 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProgressBar from './ProgressBar'
 
-const NAV_LINKS = [
-  { label: 'About',   href: '#about' },
-  { label: 'Work',    href: '#work' },
-  { label: 'Reel',    href: '#reel' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Resume',  href: '#resume' },
-  { label: 'Contact', href: '#contact' },
+const SECTIONS = [
+  { label: 'Home',         href: '#home' },
+  { label: 'About',        href: '#about' },
+  { label: 'Reel',         href: '#reel' },
+  { label: 'Resume',       href: '#resume' },
+  { label: 'Film',         href: '#film' },
+  { label: 'Theater',      href: '#theater' },
+  { label: 'Gallery',      href: '#gallery' },
+  { label: 'News',         href: '#news' },
+  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'Contact',      href: '#contact' },
 ]
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const buttonRef = useRef(null)
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+        buttonRef.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [menuOpen])
+
   return (
     <>
       <ProgressBar />
-      <motion.header
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: 'easeOut', delay: 1.2 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          scrolled
-            ? 'py-4 bg-chalk/95 backdrop-blur-md border-b border-ink/[0.06]'
-            : 'py-6'
-        }`}
+
+      <button
+        ref={buttonRef}
+        onClick={() => setMenuOpen(v => !v)}
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={menuOpen}
+        aria-controls="site-menu"
+        className="fixed top-5 right-5 md:top-7 md:right-7 z-[70] flex items-center gap-2 bg-paper border border-ink/25 px-3.5 py-2 hover:border-accent transition-colors duration-300"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+        <span className="font-type text-[0.62rem] tracking-[0.2em] uppercase text-ink">
+          {menuOpen ? 'Close' : 'Menu'}
+        </span>
+        <span className="flex flex-col gap-[3px]" aria-hidden="true">
+          <span className={`block w-4 h-px bg-ink transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-[4px]' : ''}`} />
+          <span className={`block w-4 h-px bg-ink transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-4 h-px bg-ink transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-[4px]' : ''}`} />
+        </span>
+      </button>
 
-          <a
-            href="#hero"
-            className={`font-serif italic text-[1.1rem] tracking-wide transition-colors duration-300 ${
-              scrolled ? 'text-ink hover:text-cobalt' : 'text-chalk hover:text-cobalt'
-            }`}
-          >
-            Kristiana Priscantelli
-          </a>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                className={`font-body text-[0.6rem] tracking-[0.28em] uppercase transition-colors duration-300 group relative ${
-                  scrolled ? 'text-ash hover:text-ink' : 'text-chalk/65 hover:text-chalk'
-                }`}
-              >
-                {label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-cobalt group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setMenuOpen(v => !v)}
-            aria-label="Toggle menu"
-            className="md:hidden flex flex-col gap-[5px]"
-          >
-            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6px]' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
-            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? 'opacity-0' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
-            <span className={`block w-5 h-px transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6px]' : ''} ${scrolled ? 'bg-ink' : 'bg-chalk'}`} />
-          </button>
-        </div>
-      </motion.header>
-
-      {/* Mobile fullscreen menu — cobalt colorblock */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            key="mobile-menu"
+            key="site-menu"
+            id="site-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site sections"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-cobalt flex flex-col items-start justify-center gap-8 px-10"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[65] bg-paper flex flex-col items-start justify-center gap-3 px-8 md:px-16"
           >
-            <div className="w-10 h-px bg-chalk/40 mb-2" />
-            {NAV_LINKS.map(({ label, href }, i) => (
-              <motion.a
+            <span className="font-type text-[0.6rem] tracking-[0.3em] uppercase text-muted mb-4">
+              Sections
+            </span>
+            {SECTIONS.map(({ label, href }) => (
+              <a
                 key={label}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: i * 0.07 }}
-                className="font-display uppercase text-[3.5rem] text-chalk hover:text-chalk/70 transition-colors duration-200"
+                className="font-serif italic text-[2rem] md:text-[2.75rem] text-ink hover:text-accent transition-colors duration-200 leading-tight"
               >
                 {label}
-              </motion.a>
+              </a>
             ))}
           </motion.div>
         )}

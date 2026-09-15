@@ -17,7 +17,7 @@ export default function ContactSection() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7 }}
-              className="font-body text-[0.55rem] tracking-[0.35em] uppercase text-silver mb-4"
+              className="font-body text-[0.55rem] tracking-[0.35em] uppercase text-paper/70 mb-4"
             >
               Connect
             </motion.p>
@@ -25,7 +25,7 @@ export default function ContactSection() {
               initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.1 }}
-              className="font-display uppercase text-[clamp(3.5rem,8vw,7rem)] text-chalk leading-none"
+              className="font-serif text-[clamp(3.5rem,8vw,7rem)] text-paper leading-none"
             >
               Get in<br />touch.
             </motion.h2>
@@ -33,7 +33,7 @@ export default function ContactSection() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="font-serif italic text-[1rem] md:text-[1.1rem] text-silver mt-8 max-w-xs leading-relaxed"
+              className="font-serif italic text-[1rem] md:text-[1.1rem] text-paper/70 mt-8 max-w-xs leading-relaxed"
             >
               For representation, casting, or collaboration — reach out directly or through the profiles below.
             </motion.p>
@@ -56,16 +56,16 @@ export default function ContactSection() {
                     className="group flex items-center justify-between py-5 md:py-6 hover:pl-2 transition-all duration-300"
                   >
                     <div className="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-6">
-                      <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-silver md:w-24 md:shrink-0 group-hover:text-cobalt transition-colors duration-300">
+                      <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase text-paper/70 md:w-24 md:shrink-0 group-hover:text-accent transition-colors duration-300">
                         {label}
                       </span>
-                      <span className="font-body text-[0.82rem] text-mist group-hover:text-chalk transition-colors duration-300">
+                      <span className="font-body text-[0.82rem] text-paper/85 group-hover:text-paper transition-colors duration-300">
                         {value}
                       </span>
                     </div>
                     {external && (
                       <svg
-                        className="w-3 h-3 text-ash group-hover:text-cobalt transition-colors duration-300"
+                        className="w-3 h-3 text-paper/55 group-hover:text-accent transition-colors duration-300"
                         fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={1.5}
                       >
                         <path d="M1 11L11 1M11 1H4M11 1v7" strokeLinecap="round" strokeLinejoin="round" />
@@ -79,7 +79,7 @@ export default function ContactSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.45 }}
-              className="mt-8 font-body text-[0.68rem] text-ash leading-relaxed max-w-lg"
+              className="mt-8 font-body text-[0.68rem] text-paper/55 leading-relaxed max-w-lg"
             >
               Prefer concise outreach. Include the project, dates, and a short sense of tone.
             </motion.p>

@@ -4,10 +4,14 @@
 //  Replace video URLs with real embeds (Vimeo / YouTube unlisted)
 // ─────────────────────────────────────────────
 
+// `section` drives the Film / Theater split — single source of data for both sections.
+// Other fields (role, year, description, type) are preserved for future restoration
+// even though the current editorial design only surfaces image + title.
 export const FEATURED_PROJECTS = [
   {
     id: 1,
     title: "Mishpucha",
+    section: "Film",
     type: "Film",
     role: "Lead",
     year: "2024",
@@ -18,6 +22,7 @@ export const FEATURED_PROJECTS = [
   {
     id: 2,
     title: "Being Here",
+    section: "Film",
     type: "Film",
     role: "Lead",
     year: "2023",
@@ -28,6 +33,7 @@ export const FEATURED_PROJECTS = [
   {
     id: 3,
     title: "Warm Canto",
+    section: "Film",
     type: "Film",
     role: "Lead",
     year: "2023",
@@ -38,6 +44,7 @@ export const FEATURED_PROJECTS = [
   {
     id: 4,
     title: "The Longest Hour",
+    section: "Film",
     type: "Feature Film",
     role: "Lead — Clara",
     year: "2024–25",
@@ -48,6 +55,7 @@ export const FEATURED_PROJECTS = [
   {
     id: 5,
     title: "Everything Still",
+    section: "Theater",
     type: "Theatre",
     role: "Lead — Margot",
     year: "2023",
@@ -58,6 +66,7 @@ export const FEATURED_PROJECTS = [
   {
     id: 6,
     title: "A Quiet Violence",
+    section: "Film",
     type: "Short Film",
     role: "Lead — Anna",
     year: "2022",
@@ -191,6 +200,17 @@ export const PRESS_QUOTE = {
 export const RESUME_PDF_URL = "/Kristiana-Priscantelli-Resume.pdf"
 export const RESUME_STATUS = "SAG-Eligible"
 
+// Structured as a list so additional testimonials can be added later without
+// changing the component.
+export const TESTIMONIALS = [
+  {
+    id: 1,
+    quote: "Kristiana's performance brings out the irrationality of a woman who will stop at nothing. She's brash and in your face and trusts her instincts more than any objective truth. Every feeling seems like a fact.",
+    attribution: "Travis Frick",
+    context: "director of 7734 Sunset Place",
+  },
+]
+
 export const CREDITS = [
   // Film
   { category: "Film", title: "7734 Sunset Place",        tier: "Lead",       format: "Feature",                        director: "Travis Frick" },
@@ -241,16 +261,14 @@ export const SKILLS = [
 
 export const DIALECTS = ["Australian", "British", "French", "Irish", "Italian", "Russian", "Southern U.S."]
 
-// Main reel — replace src with real Vimeo/YouTube unlisted URL
+// Main reel — Vimeo player embed URL (not the public vimeo.com share page URL).
+// The `h` param is the video's privacy hash, required because it's an unlisted video —
+// taken from the twitter:player meta tag on the public vimeo.com/1147457236 page.
+// Vimeo also restricts embedding to domains the client allowlists in the video's
+// privacy settings, so this will show a "can't be played here" error on any domain
+// (including localhost) that hasn't been added there — see report for details.
 export const REEL = {
-  title: "Demo Reel",
+  title: "Reel",
   year: "2024–2025",
-  // embedSrc: "https://player.vimeo.com/video/YOUR_VIMEO_ID?background=0&autoplay=0",
-  embedSrc: null,
+  embedSrc: "https://player.vimeo.com/video/1147457236?h=b58b50dbf4",
 }
-
-export const SCENE_CLIPS = [
-  { id: 1, title: "Dramatic Scene — The Longest Hour", embedSrc: null },
-  { id: 2, title: "Comedy Scene — Glass Animals",      embedSrc: null },
-  { id: 3, title: "Physical Scene — Everything Still", embedSrc: null },
-]
