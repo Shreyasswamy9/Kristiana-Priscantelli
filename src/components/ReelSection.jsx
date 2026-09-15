@@ -1,37 +1,45 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import Player from '@vimeo/player'
 import { REEL } from '../data/placeholders'
 import { useInView } from '../hooks/useInView'
 import ScrollArrow from './ScrollArrow'
-
-// Appending autoplay here (rather than baking it into placeholders.js) means the
-// iframe only starts loading/playing once the user taps our own play button —
-// keeps the section quiet on scroll-into-view instead of autoplaying immediately.
-function withAutoplay(src) {
-  if (!src) return src
-  return src.includes('?') ? `${src}&autoplay=1` : `${src}?autoplay=1`
-}
 
 export default function ReelSection() {
   const { ref, inView } = useInView({ threshold: 0.1 })
   const [started, setStarted] = useState(false)
   const iframeRef = useRef(null)
+  const playerRef = useRef(null)
 
-  // Vimeo's own fullscreen button lives inside a cross-origin iframe, so it can't
-  // be triggered programmatically from here — but a tap on OUR play button is a
-  // real user gesture in our own document, which browsers will honor for
-  // requestFullscreen(). Fire both the fullscreen request and playback from the
-  // same synchronous click handler so the gesture "counts" for both.
+  // The iframe is mounted with its real src from the start (just visually
+  // covered by our play button) so the Vimeo Player SDK can bind to it ahead
+  // of any click — its play()/requestFullscreen() calls are queued internally
+  // until the player reports ready, so there's no race with the click handler.
+  useEffect(() => {
+    if (!REEL.embedSrc || !iframeRef.current) return
+    playerRef.current = new Player(iframeRef.current)
+    return () => {
+      playerRef.current?.destroy()
+      playerRef.current = null
+    }
+  }, [])
+
+  // A direct `iframe.requestFullscreen()` from the parent page works on desktop
+  // and Android Chrome, but iOS Safari/Chrome (both WebKit) refuse to fullscreen
+  // a cross-origin iframe from outside it. Going through Vimeo's own Player SDK
+  // instead routes the request through Vimeo's own script running *inside* its
+  // iframe, fullscreening its own <video> element — the same legacy path every
+  // native <video> tag has always been allowed to use on iOS. Both calls fire
+  // from this one synchronous click handler so the tap counts as the user
+  // gesture for both.
   const handlePlay = () => {
     setStarted(true)
-    const iframe = iframeRef.current
-    if (!iframe) return
-    const request = iframe.requestFullscreen?.bind(iframe)
-      || iframe.webkitRequestFullscreen?.bind(iframe)
-    Promise.resolve(request?.()).catch(() => {
-      // Fullscreen isn't available (e.g. pre-16.4 iOS Safari can't fullscreen
-      // an iframe at all) — video still plays inline, no worse than before.
+    const player = playerRef.current
+    if (!player) return
+    player.requestFullscreen().catch(() => {
+      // No fullscreen support at all on this browser — video still plays inline.
     })
+    player.play().catch(() => {})
   }
 
   return (
@@ -66,7 +74,7 @@ export default function ReelSection() {
           {REEL.embedSrc && (
             <iframe
               ref={iframeRef}
-              src={started ? withAutoplay(REEL.embedSrc) : undefined}
+              src={REEL.embedSrc}
               title="Kristiana Priscantelli — Reel"
               className="absolute inset-0 w-full h-full border-0 bg-ink"
               loading="lazy"

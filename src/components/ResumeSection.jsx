@@ -1,18 +1,15 @@
+import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { RESUME_PDF_URL } from '../data/placeholders'
 import { useInView } from '../hooks/useInView'
 import ScrollArrow from './ScrollArrow'
 
+// Lazy-loaded so the pdf.js chunk only downloads once this section is
+// actually about to be seen, not as part of the main bundle.
+const ResumeViewer = lazy(() => import('./ResumeViewer'))
+
 export default function ResumeSection() {
   const { ref, inView } = useInView({ threshold: 0.1 })
-
-  // Absolute URL required by Google's viewer (it fetches the PDF itself).
-  // Only resolves once deployed to a public domain — falls back gracefully
-  // to the view/download links below it if the embed can't load.
-  const resumeAbsoluteUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}${RESUME_PDF_URL}`
-    : RESUME_PDF_URL
-  const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(resumeAbsoluteUrl)}&embedded=true`
 
   return (
     <section id="resume" className="relative py-24 md:py-36 bg-paper">
@@ -61,47 +58,23 @@ export default function ResumeSection() {
           </motion.div>
         </div>
 
-        {/* Embedded viewer — desktop/tablet only; mobile PDF embeds are unreliable */}
+        {/* Renders the PDF itself, sized exactly to the container on any
+            screen — same component for desktop and mobile. */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.25 }}
-          className="hidden md:block border border-ink/15 bg-white h-[80vh]"
         >
-          <object data={RESUME_PDF_URL} type="application/pdf" className="w-full h-full">
-            <div className="w-full h-full flex items-center justify-center text-center px-8">
-              <p className="font-serif italic text-lg text-muted">
-                This browser can't preview the PDF here — use View Resume or Download PDF above.
+          {inView && (
+            <Suspense fallback={
+              <p className="text-center font-serif italic text-lg text-muted py-16">
+                Loading resume…
               </p>
-            </div>
-          </object>
+            }>
+              <ResumeViewer url={RESUME_PDF_URL} />
+            </Suspense>
+          )}
         </motion.div>
-
-        {/* Mobile — inline viewer via Google Docs (native <object>/<embed> PDF
-            rendering is unreliable across mobile browsers), so the resume stays
-            on-site instead of forcing a new-tab hop. Requires a public URL. */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.25 }}
-          className="md:hidden border border-ink/15 bg-white h-[70vh]"
-        >
-          <iframe
-            src={googleViewerUrl}
-            title="Kristiana Priscantelli — Resume"
-            className="w-full h-full border-0"
-            loading="lazy"
-          />
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.35 }}
-          className="md:hidden mt-4 text-center font-body text-[0.7rem] text-muted"
-        >
-          Not loading? Use View Resume or Download PDF above.
-        </motion.p>
       </div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-10 mt-20 md:mt-28 flex justify-center">
