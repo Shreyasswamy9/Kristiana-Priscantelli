@@ -20,8 +20,8 @@ export default function App() {
         <Header />
         <main>
           <Hero />
-          <AboutPreview />
           <ReelSection />
+          <AboutPreview />
           <ResumeSection />
           <FilmSection />
           <TheaterSection />

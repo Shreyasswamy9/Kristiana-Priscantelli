@@ -31,7 +31,7 @@ export default function AboutPreview() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 md:px-10 mt-20 md:mt-28 flex justify-center">
-        <ScrollArrow to="reel" label="Scroll to Reel section" />
+        <ScrollArrow to="resume" label="Scroll to Resume section" />
       </div>
     </section>
   )

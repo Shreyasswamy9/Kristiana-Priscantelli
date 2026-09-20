@@ -103,7 +103,7 @@ export default function ReelSection() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 mt-20 md:mt-28 flex justify-center">
-        <ScrollArrow to="resume" label="Scroll to Resume section" />
+        <ScrollArrow to="about" label="Scroll to About section" />
       </div>
     </section>
   )
